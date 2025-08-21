@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-/* Body with animated gradient */
+/* Body with animated gradient background */
 body {
   font-family: 'Inter', sans-serif;
   height: 100vh;
@@ -18,7 +18,6 @@ body {
   animation: gradientBG 15s ease infinite;
 }
 
-/* Gradient animation keyframes */
 @keyframes gradientBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -28,7 +27,7 @@ body {
 /* Container */
 .container {
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent */
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   padding: 40px 30px;
@@ -82,10 +81,10 @@ h1 {
   font-size: 16px;
   text-decoration: none;
   color: white;
-  font-weight: 700; /* Bold text */
+  font-weight: 700;
   transition: all 0.3s;
   display: block;
-  border: none; /* Borderless */
+  border: none;
   cursor: pointer;
   text-align: center;
 }
@@ -93,34 +92,18 @@ h1 {
 /* Individual button colors */
 .btn:nth-child(1) { background-color: #1DA1F2; } /* Twitter */
 .btn:nth-child(2) { background-color: #333; } /* GitHub */
+.btn:nth-child(3) { background-color: #0077b5; } /* LinkedIn / Discord */
 .btn.discord { background-color: #7289DA; } /* Discord */
-.btn:nth-child(4) { background-color: #3b5998; } /* Facebook */
+.btn.facebook { background-color: #3b5998; } /* Facebook */
 
 /* Hover effect with glow */
 .btn:hover {
   transform: scale(1.05);
 }
 
-/* Glow per button on hover */
+/* Glow per button */
 .btn:nth-child(1):hover { box-shadow: 0 0 15px #1DA1F2, 0 0 30px #1DA1F2; }
 .btn:nth-child(2):hover { box-shadow: 0 0 15px #333, 0 0 30px #333; }
 .btn:nth-child(3):hover { box-shadow: 0 0 15px #0077b5, 0 0 30px #0077b5; }
 .btn.discord:hover { box-shadow: 0 0 15px #7289DA, 0 0 30px #7289DA; }
-.btn:nth-child(4):hover { box-shadow: 0 0 15px #3b5998, 0 0 30px #3b5998; }
-
-/* Floating Music Player */
-.music-player {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  z-index: 1;
-  border-top: 2px solid #ccc;
-}
-
-.music-player iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
+.btn.facebook:hover { box-shadow: 0 0 15px #3b5998, 0 0 30px #3b5998; }
