@@ -8,11 +8,12 @@
 /* Body */
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  background-color: silver;  /* Silver background */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: hidden;
 }
 
 /* Container */
@@ -24,6 +25,7 @@ body {
   padding: 40px 30px;
   width: 350px;
   transition: transform 0.3s;
+  z-index: 10;
 }
 
 .container:hover {
@@ -36,7 +38,7 @@ body {
   height: 130px;
   border-radius: 50%;
   margin-bottom: 20px;
-  border: 4px solid #7289DA; /* Discord color accent */
+  border: 4px solid #7289DA;
   transition: transform 0.3s;
 }
 
@@ -71,19 +73,40 @@ h1 {
   font-size: 16px;
   text-decoration: none;
   color: white;
-  font-weight: 600;
+  font-weight: 700; /* Bold text */
   transition: all 0.3s;
   display: block;
+  border: none; /* Borderless */
+  cursor: pointer;
+  text-align: center;
 }
 
 /* Individual button colors */
 .btn:nth-child(1) { background-color: #1DA1F2; } /* Twitter */
 .btn:nth-child(2) { background-color: #333; } /* GitHub */
+.btn:nth-child(3) { background-color: #0077b5; } /* LinkedIn */
 .btn.discord { background-color: #7289DA; } /* Discord */
 
 /* Hover effect */
 .btn:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Floating Music Player */
+.music-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 1;
+  border-top: 2px solid #ccc;
+}
+
+.music-player iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
