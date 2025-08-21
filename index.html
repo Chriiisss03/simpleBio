@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Christian Jay Borja</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>My Socials</title>
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <!-- Avatar -->
     <div class="avatar">
-      <img src="img/Chris.jpg" width = 200px height = 150px alt="Christian Jay Borja">
+      <img src="img/chris.jpg" alt="Christian Jay Borja">
     </div>
-
+    
     <!-- Name and Bio -->
     <h1>Christian Jay Borja</h1>
-    <p class="bio">Quick learner | Punctual | Team player | Passionate about tech & coding</p>
-
+    <p class="bio"> Pogi | Punctual | Team player | Passionate about tech</p>
+    
     <!-- Social Links -->
     <div class="social-links">
       <a href="https://x.com/nori03249497?s=21&t=kbG3z0wjh5iPSuG8bHQnXg" target="_blank" class="btn">Twitter</a>
@@ -27,11 +27,14 @@
     </div>
   </div>
 
-  <!-- Background Music (hidden, autoplay, loop) -->
-  <audio autoplay loop>
+  <!-- Background Music with Controls -->
+  <audio id="bgMusic" loop>
     <source src="audio/I-KNOW.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
+  
+  <button class="audio-control" onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
 
+  <script src="script.js"></script>
 </body>
 </html>
