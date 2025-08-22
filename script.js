@@ -1,69 +1,110 @@
-// Audio Controls
-const audio = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
+// Audio Controls - Fixed version
+let audio = null;
+let musicBtn = null;
 let isPlaying = false;
+
+// Initialize audio controls when DOM is ready
+function initAudioControls() {
+  audio = document.getElementById('bgMusic');
+  musicBtn = document.getElementById('musicBtn');
+  
+  if (!audio || !musicBtn) {
+    console.error('Audio elements not found!');
+    return;
+  }
+  
+  // Add click event listener to the button
+  musicBtn.addEventListener('click', toggleMusic);
+  
+  // Set initial volume
+  audio.volume = 0.5;
+  
+  // Add audio event listeners
+  audio.addEventListener('loadstart', () => {
+    console.log('Audio loading...');
+    musicBtn.textContent = '⏳ Loading...';
+  });
+  
+  audio.addEventListener('canplaythrough', () => {
+    console.log('Audio ready to play!');
+    musicBtn.textContent = '🎵 Play Music';
+    musicBtn.disabled = false;
+    musicBtn.style.cursor = 'pointer';
+  });
+  
+  audio.addEventListener('playing', () => {
+    console.log('Music is playing');
+    musicBtn.textContent = '🔇 Mute Music';
+    musicBtn.style.backgroundColor = 'rgba(114, 137, 218, 0.2)';
+    isPlaying = true;
+  });
+  
+  audio.addEventListener('pause', () => {
+    console.log('Music paused');
+    musicBtn.textContent = '🎵 Play Music';
+    musicBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+    isPlaying = false;
+  });
+  
+  audio.addEventListener('error', (e) => {
+    console.error('Audio loading error:', e);
+    musicBtn.textContent = '❌ Audio Error';
+    musicBtn.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
+    musicBtn.title = 'Audio file could not be loaded';
+    
+    // Try to provide helpful error message
+    const errorMessages = {
+      1: 'Audio loading aborted',
+      2: 'Network error while loading audio',
+      3: 'Audio decoding error',
+      4: 'Audio format not supported'
+    };
+    
+    const errorCode = audio.error ? audio.error.code : 0;
+    const errorMsg = errorMessages[errorCode] || 'Unknown audio error';
+    
+    console.error('Error details:', errorMsg);
+    
+    // Provide fallback action
+    musicBtn.addEventListener('click', () => {
+      alert(`Audio Error: ${errorMsg}\n\nTo fix this:\n1. Check your internet connection (if using online audio)\n2. Or add your own MP3 file in the "audio" folder\n3. Or update the audio source in the HTML file`);
+    });
+  });
+}
 
 function toggleMusic() {
   if (!audio) {
-    console.error('Audio element not found!');
+    console.error('Audio not initialized!');
     return;
   }
   
   if (isPlaying) {
     audio.pause();
-    musicBtn.textContent = '🎵 Play Music';
-    musicBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-    isPlaying = false;
+    console.log('Pausing music');
   } else {
-    // Check if audio file exists first
-    audio.play().then(() => {
-      musicBtn.textContent = '🔇 Mute Music';
-      musicBtn.style.backgroundColor = 'rgba(114, 137, 218, 0.2)';
-      isPlaying = true;
-      console.log('Music playing successfully!');
-    }).catch(error => {
-      console.log('Audio play failed:', error);
-      musicBtn.textContent = '❌ Audio Error';
-      musicBtn.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
-      
-      // Show helpful error message
-      setTimeout(() => {
-        alert('Music file not found! Please ensure:\n\n1. Create a folder named "audio" in the same directory as your HTML file\n2. Place your music file named "I-KNOW.mp3" inside the audio folder\n3. File structure should be:\n   - index.html\n   - style.css\n   - script.js\n   - audio/\n     └── I-KNOW.mp3\n\nOr you can use any MP3 file, just rename it to "I-KNOW.mp3"');
-      }, 100);
-    });
+    // Use play() with promise handling
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          console.log('Music started successfully');
+        })
+        .catch(error => {
+          console.error('Playback failed:', error);
+          musicBtn.textContent = '🚫 Click Again';
+          musicBtn.style.backgroundColor = 'rgba(255, 200, 0, 0.3)';
+          
+          // Browser might be blocking autoplay, need user interaction
+          if (error.name === 'NotAllowedError') {
+            alert('Please click the button again to play music.\n\nModern browsers require user interaction to play audio.');
+          } else {
+            alert('Could not play audio. Error: ' + error.message);
+          }
+        });
+    }
   }
 }
-
-// Test if audio file loads
-audio.addEventListener('loadstart', () => {
-  console.log('Audio loading...');
-  musicBtn.textContent = '🎵 Loading...';
-});
-
-audio.addEventListener('canplaythrough', () => {
-  console.log('Audio ready to play!');
-  musicBtn.textContent = '🎵 Play Music';
-  musicBtn.style.backgroundColor = 'rgba(0, 255, 0, 0.2)';
-  setTimeout(() => {
-    musicBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-  }, 2000);
-});
-
-audio.addEventListener('error', (e) => {
-  console.error('Audio error:', e);
-  console.log('Audio source:', audio.src);
-  musicBtn.textContent = '📁 Add Audio';
-  musicBtn.style.backgroundColor = 'rgba(255, 200, 0, 0.2)';
-  musicBtn.title = 'Click for instructions';
-  
-  // Change button behavior to show instructions
-  musicBtn.onclick = () => {
-    alert('To add music:\n\n1. Create an "audio" folder next to your HTML file\n2. Add any MP3 file and rename it to "I-KNOW.mp3"\n3. Refresh the page\n\nOr you can change the audio source in the HTML file to point to your own music file!');
-  };
-});
-
-// Add volume control
-audio.volume = 0.5; // Set default volume to 50%
 
 // Auto-pause when tab is not visible (optional)
 document.addEventListener('visibilitychange', function() {
@@ -525,6 +566,9 @@ class InteractiveEffects {
 // INITIALIZE EVERYTHING
 // =====================================
 document.addEventListener('DOMContentLoaded', function() {
+  // Initialize audio controls FIRST
+  initAudioControls();
+  
   // Initialize cloud system
   window.cloudSystem = new CloudSystem();
   
