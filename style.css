@@ -173,105 +173,177 @@ h1 {
 
 .cloud {
   position: absolute;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 100px;
-  opacity: 0.8;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 255, 255, 0.9) 0%, 
+    rgba(255, 255, 255, 0.7) 40%, 
+    rgba(255, 255, 255, 0.4) 60%, 
+    rgba(255, 255, 255, 0) 100%);
+  filter: blur(2px);
+  opacity: 0;
 }
 
-/* Individual cloud animations */
+/* Create realistic cloud shapes with pseudo-elements */
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 255, 255, 0.8) 0%, 
+    rgba(255, 255, 255, 0.5) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 50%;
+  height: 80%;
+  top: -30%;
+  left: 10%;
+}
+
+.cloud::after {
+  width: 60%;
+  height: 70%;
+  top: -20%;
+  right: 10%;
+}
+
+/* Cloud puff styling for dynamic clouds */
+.cloud-puff {
+  position: absolute;
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.6) 30%,
+    rgba(255, 255, 255, 0.3) 60%,
+    rgba(255, 255, 255, 0) 100%);
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+/* Individual cloud styles with varied shapes */
 .cloud1 {
-  width: 100px;
-  height: 40px;
-  top: 20%;
-  animation: floatAcross 35s infinite;
+  width: 120px;
+  height: 50px;
+  border-radius: 100px;
+  top: 15%;
+  animation: floatAcross 45s infinite linear, gentleBob 4s infinite ease-in-out;
 }
 
 .cloud2 {
-  width: 80px;
-  height: 35px;
-  top: 40%;
-  animation: floatAcross 40s infinite 5s;
+  width: 100px;
+  height: 45px;
+  border-radius: 80px;
+  top: 35%;
+  animation: floatAcross 50s infinite 5s linear, gentleBob 5s infinite 1s ease-in-out;
+  filter: blur(3px);
+  opacity: 0.7;
 }
 
 .cloud3 {
-  width: 120px;
-  height: 45px;
-  top: 60%;
-  animation: floatAcross 30s infinite 10s;
+  width: 150px;
+  height: 60px;
+  border-radius: 120px;
+  top: 55%;
+  animation: floatAcross 40s infinite 10s linear, gentleBob 6s infinite 2s ease-in-out;
 }
 
 .cloud4 {
-  width: 90px;
-  height: 38px;
-  top: 80%;
-  animation: floatAcross 45s infinite 15s;
+  width: 110px;
+  height: 48px;
+  border-radius: 90px;
+  top: 75%;
+  animation: floatAcross 55s infinite 15s linear, gentleBob 4.5s infinite 0.5s ease-in-out;
+  filter: blur(2.5px);
 }
 
 .cloud5 {
-  width: 110px;
-  height: 42px;
+  width: 130px;
+  height: 52px;
+  border-radius: 100px;
   top: 10%;
-  animation: floatAcross 38s infinite 20s;
+  animation: floatAcross 48s infinite 20s linear, gentleBob 5.5s infinite 1.5s ease-in-out;
 }
 
 .cloud6 {
-  width: 85px;
-  height: 36px;
-  top: 50%;
-  animation: floatAcross 42s infinite 25s;
+  width: 95px;
+  height: 42px;
+  border-radius: 70px;
+  top: 45%;
+  animation: floatAcross 52s infinite 25s linear, gentleBob 4s infinite 3s ease-in-out;
+  filter: blur(3.5px);
+  opacity: 0.6;
 }
 
 .cloud7 {
-  width: 95px;
-  height: 40px;
-  top: 30%;
-  animation: floatAcross 33s infinite 30s;
+  width: 115px;
+  height: 46px;
+  border-radius: 85px;
+  top: 25%;
+  animation: floatAcross 43s infinite 30s linear, gentleBob 5s infinite 2.5s ease-in-out;
 }
 
 .cloud8 {
-  width: 105px;
-  height: 41px;
-  top: 70%;
-  animation: floatAcross 36s infinite 35s;
+  width: 125px;
+  height: 51px;
+  border-radius: 95px;
+  top: 65%;
+  animation: floatAcross 46s infinite 35s linear, gentleBob 6s infinite 1s ease-in-out;
+  filter: blur(2px);
+}
+
+/* Add gentle bobbing motion */
+@keyframes gentleBob {
+  0%, 100% { 
+    transform: translateY(0px) scale(1); 
+  }
+  25% { 
+    transform: translateY(-8px) scale(1.02); 
+  }
+  50% { 
+    transform: translateY(5px) scale(0.98); 
+  }
+  75% { 
+    transform: translateY(-3px) scale(1.01); 
+  }
 }
 
 @keyframes floatAcross {
   0% {
     left: -250px;
     opacity: 0;
-    transform: translateY(0px);
+    transform: translateX(0) translateZ(0);
+  }
+  2% {
+    opacity: 0.3;
   }
   5% {
-    opacity: 0.8;
+    opacity: 0.7;
   }
-  25% {
-    transform: translateY(-5px);
+  10% {
+    opacity: 0.9;
   }
-  50% {
-    transform: translateY(3px);
-  }
-  75% {
-    transform: translateY(-2px);
+  90% {
+    opacity: 0.9;
   }
   95% {
-    opacity: 0.8;
+    opacity: 0.7;
+  }
+  98% {
+    opacity: 0.3;
   }
   100% {
-    left: calc(100vw + 100px);
+    left: calc(100vw + 250px);
     opacity: 0;
-    transform: translateY(0px);
+    transform: translateX(0) translateZ(0);
   }
 }
 
-@keyframes gentleFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
+/* Removed duplicate gentleFloat */
 
 .cloud:hover {
   animation-play-state: paused;
-  transform: scale(1.1) translateY(-5px) !important;
-  transition: all 0.3s ease;
+  filter: blur(1px) !important;
+  transition: all 0.5s ease;
 }
 
 /* Mobile responsiveness */
