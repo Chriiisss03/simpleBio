@@ -192,32 +192,28 @@ class CloudSystem {
       this.addRealisticPuff(cloudWrapper, baseSize, height, opacity);
     }
     
-    // Set initial position and animation
+    // Set initial position
     let initialLeft = startOnScreen ? 
       this.randomBetween(0, window.innerWidth - baseSize) : 
-      -(baseSize + 100);
+      -baseSize - 100;
     
-    // Apply positioning and animations
+    // Apply positioning and animations with fixed animation names
     cloudWrapper.style.cssText = `
       position: absolute;
       pointer-events: none;
       top: ${topPosition}%;
-      left: ${initialLeft}px;
       width: ${baseSize}px;
       height: ${height}px;
     `;
     
     if (animate) {
-      // Animate cloud across screen
-      cloudWrapper.style.animation = `
-        cloudMove ${speed}s linear infinite ${delay}s,
-        gentleBob ${this.randomBetween(4, 7)}s ease-in-out infinite ${this.randomBetween(0, 2)}s
-      `;
+      // Use simple left-based animation
+      cloudWrapper.style.left = `${initialLeft}px`;
+      cloudWrapper.style.animation = `moveCloud ${speed}s linear infinite ${delay}s`;
     } else {
-      // Just bob in place for initial clouds
-      cloudWrapper.style.animation = `
-        gentleBob ${this.randomBetween(4, 7)}s ease-in-out infinite ${this.randomBetween(0, 2)}s
-      `;
+      // Static clouds just bob in place
+      cloudWrapper.style.left = `${initialLeft}px`;
+      cloudWrapper.style.animation = `gentleBob ${this.randomBetween(4, 7)}s ease-in-out infinite`;
     }
     
     this.cloudContainer.appendChild(cloudWrapper);
@@ -318,7 +314,7 @@ class CloudSystem {
       this.addRealisticPuff(cloudWrapper, baseSize, height, opacity);
     }
     
-    // Position cloud at specific X coordinate and animate from there
+    // Position cloud and animate using transform
     cloudWrapper.style.cssText = `
       position: absolute;
       pointer-events: none;
@@ -355,71 +351,41 @@ class CloudSystem {
     const style = document.createElement('style');
     style.id = 'cloud-animations';
     style.textContent = `
-      @keyframes cloudMove {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(calc(100vw + 500px));
-        }
-      }
-      
-      @keyframes floatAcross {
+      @keyframes moveCloud {
         0% {
-          transform: translateX(0) translateZ(0);
-          opacity: 0;
-        }
-        2% {
-          opacity: 0.3;
-        }
-        5% {
-          opacity: 0.7;
-        }
-        10% {
-          opacity: 1;
-        }
-        90% {
-          opacity: 1;
-        }
-        95% {
-          opacity: 0.7;
-        }
-        98% {
-          opacity: 0.3;
+          left: -300px;
         }
         100% {
-          transform: translateX(calc(100vw + 400px)) translateZ(0);
-          opacity: 0;
+          left: calc(100% + 300px);
         }
       }
       
       @keyframes floatFromPosition {
         0% {
-          transform: translateX(0) translateZ(0);
+          transform: translateX(0);
         }
         100% {
-          transform: translateX(calc(100vw + 400px)) translateZ(0);
+          transform: translateX(calc(100vw + 400px));
         }
       }
       
       @keyframes gentleBob {
         0%, 100% { 
-          transform: translateY(0px) scale(1) rotate(0deg); 
+          transform: translateY(0px) scale(1); 
         }
         25% { 
-          transform: translateY(-10px) scale(1.02) rotate(1deg); 
+          transform: translateY(-10px) scale(1.02); 
         }
         50% { 
-          transform: translateY(5px) scale(0.98) rotate(-1deg); 
+          transform: translateY(5px) scale(0.98); 
         }
         75% { 
-          transform: translateY(-3px) scale(1.01) rotate(0.5deg); 
+          transform: translateY(-3px) scale(1.01); 
         }
       }
       
       .cloud-wrapper {
-        will-change: transform;
-        transform: translateZ(0);
+        will-change: left, transform;
       }
       
       .cloud-wrapper:hover .cloud-puff {
