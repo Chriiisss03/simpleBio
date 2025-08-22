@@ -3,20 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Christian Jay Borja</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>My Socials</title>
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Moving Clouds -->
+  <div class="clouds">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="cloud cloud4"></div>
+    <div class="cloud cloud5"></div>
+    <div class="cloud cloud6"></div>
+    <div class="cloud cloud7"></div>
+    <div class="cloud cloud8"></div>
+  </div>
+
   <div class="container">
     <!-- Avatar -->
     <div class="avatar">
-      <img src="img/Chris.jpg" alt="Christian Jay Borja">
+      <img src="img/chris.jpg" alt="Christian Jay Borja">
     </div>
     
     <!-- Name and Bio -->
     <h1>Christian Jay Borja</h1>
-    <p class="bio">Quick learner | Punctual | Team player | Passionate about tech & coding</p>
+    <p class="bio">Pogi | Punctual | Team player | Passionate about tech</p>
     
     <!-- Social Links -->
     <div class="social-links">
@@ -34,59 +46,7 @@
   </audio>
   
   <button class="audio-control" onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
-
-  <script>
-    const audio = document.getElementById('bgMusic');
-    const musicBtn = document.getElementById('musicBtn');
-    let isPlaying = false;
-
-    function toggleMusic() {
-      if (isPlaying) {
-        audio.pause();
-        musicBtn.textContent = '🎵 Play Music';
-        musicBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-        isPlaying = false;
-      } else {
-        // Check if audio file exists first
-        audio.play().then(() => {
-          musicBtn.textContent = '🔇 Mute Music';
-          musicBtn.style.backgroundColor = 'rgba(114, 137, 218, 0.2)';
-          isPlaying = true;
-        }).catch(error => {
-          console.log('Audio play failed:', error);
-          musicBtn.textContent = '❌ Audio Error';
-          musicBtn.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
-          
-          // Show helpful error message
-          setTimeout(() => {
-            alert('Music file not found! Make sure you have:\n1. A folder named "audio"\n2. Your music file "I-KNOW.mp3" inside that folder\n3. Both in the same directory as your HTML file');
-          }, 100);
-        });
-      }
-    }
-
-    // Test if audio file loads
-    audio.addEventListener('loadstart', () => {
-      console.log('Audio loading...');
-    });
-
-    audio.addEventListener('canplay', () => {
-      console.log('Audio ready to play!');
-      musicBtn.style.backgroundColor = 'rgba(0, 255, 0, 0.2)';
-    });
-
-    audio.addEventListener('error', (e) => {
-      console.log('Audio error:', e);
-      musicBtn.textContent = '❌ No Audio';
-      musicBtn.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
-    });
-
-    // Auto-pause when tab is not visible (optional)
-    document.addEventListener('visibilitychange', function() {
-      if (document.hidden && isPlaying) {
-        audio.pause();
-      }
-    });
-  </script>
+  
+  <script src="script.js"></script>
 </body>
 </html>
