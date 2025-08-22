@@ -38,147 +38,240 @@ body {
 
 .cloud {
   position: absolute;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 100px;
-  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50px;
+  opacity: 0.8;
 }
 
 .cloud::before,
 .cloud::after {
   content: '';
   position: absolute;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50px;
 }
 
-/* Cloud 1 */
+/* Realistic Cloud 1 - Fluffy cumulus style */
 .cloud1 {
-  width: 80px;
-  height: 80px;
-  top: 20%;
-  left: -100px;
-  animation: moveRight 25s linear infinite;
+  width: 120px;
+  height: 50px;
+  top: 15%;
+  left: -150px;
+  animation: moveRight 30s linear infinite;
+  border-radius: 50px;
 }
 
 .cloud1::before {
-  width: 50px;
-  height: 50px;
-  top: -25px;
-  left: 10px;
+  width: 80px;
+  height: 80px;
+  top: -40px;
+  left: 20px;
+  border-radius: 50%;
 }
 
 .cloud1::after {
   width: 60px;
-  height: 20px;
-  top: 10px;
-  left: 15px;
+  height: 60px;
+  top: -30px;
+  left: 60px;
+  border-radius: 50%;
 }
 
-/* Cloud 2 */
+/* Realistic Cloud 2 - Stretched horizontal cloud */
 .cloud2 {
-  width: 60px;
-  height: 60px;
-  top: 10%;
-  left: -80px;
-  animation: moveRight 30s linear infinite 5s;
+  width: 140px;
+  height: 40px;
+  top: 25%;
+  left: -160px;
+  animation: moveRight 35s linear infinite 8s;
+  border-radius: 40px;
 }
 
 .cloud2::before {
-  width: 40px;
-  height: 40px;
-  top: -20px;
-  left: 8px;
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 15px;
+  border-radius: 50%;
 }
 
 .cloud2::after {
-  width: 50px;
-  height: 15px;
-  top: 8px;
-  left: 12px;
+  width: 90px;
+  height: 60px;
+  top: -25px;
+  left: 50px;
+  border-radius: 50%;
 }
 
-/* Cloud 3 */
+/* Realistic Cloud 3 - Small puffy cloud */
 .cloud3 {
   width: 100px;
-  height: 60px;
-  top: 70%;
+  height: 45px;
+  top: 8%;
   left: -120px;
-  animation: moveRight 20s linear infinite 10s;
+  animation: moveRight 25s linear infinite 15s;
+  border-radius: 45px;
 }
 
 .cloud3::before {
-  width: 60px;
-  height: 40px;
-  top: -20px;
-  left: 15px;
+  width: 65px;
+  height: 65px;
+  top: -32px;
+  left: 18px;
+  border-radius: 50%;
 }
 
 .cloud3::after {
-  width: 70px;
-  height: 20px;
-  top: 15px;
-  left: 20px;
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 45px;
+  border-radius: 50%;
 }
 
-/* Cloud 4 */
+/* Realistic Cloud 4 - Large cumulus cloud */
 .cloud4 {
-  width: 70px;
-  height: 50px;
-  top: 80%;
-  left: -90px;
-  animation: moveRight 28s linear infinite 15s;
+  width: 160px;
+  height: 60px;
+  top: 70%;
+  left: -180px;
+  animation: moveRight 40s linear infinite 5s;
+  border-radius: 60px;
 }
 
 .cloud4::before {
-  width: 45px;
-  height: 35px;
-  top: -18px;
-  left: 12px;
+  width: 100px;
+  height: 90px;
+  top: -45px;
+  left: 30px;
+  border-radius: 50%;
 }
 
 .cloud4::after {
-  width: 55px;
-  height: 18px;
-  top: 12px;
-  left: 18px;
+  width: 80px;
+  height: 70px;
+  top: -35px;
+  left: 70px;
+  border-radius: 50%;
 }
 
-/* Cloud 5 */
+/* Realistic Cloud 5 - Medium wispy cloud */
 .cloud5 {
-  width: 90px;
-  height: 70px;
-  top: 40%;
-  left: -110px;
-  animation: moveRight 35s linear infinite 8s;
+  width: 130px;
+  height: 35px;
+  top: 80%;
+  left: -140px;
+  animation: moveRight 32s linear infinite 20s;
+  border-radius: 35px;
 }
 
 .cloud5::before {
-  width: 55px;
-  height: 45px;
-  top: -22px;
-  left: 18px;
+  width: 75px;
+  height: 60px;
+  top: -30px;
+  left: 25px;
+  border-radius: 50%;
 }
 
 .cloud5::after {
+  width: 55px;
+  height: 45px;
+  top: -22px;
+  left: 55px;
+  border-radius: 50%;
+}
+
+/* Realistic Cloud 6 - Top area cloud */
+.cloud6 {
+  width: 110px;
+  height: 40px;
+  top: 5%;
+  left: -130px;
+  animation: moveRight 28s linear infinite 12s;
+  border-radius: 40px;
+}
+
+.cloud6::before {
+  width: 70px;
+  height: 65px;
+  top: -32px;
+  left: 20px;
+  border-radius: 50%;
+}
+
+.cloud6::after {
+  width: 60px;
+  height: 50px;
+  top: -25px;
+  left: 45px;
+  border-radius: 50%;
+}
+
+/* Realistic Cloud 7 - Middle area cloud */
+.cloud7 {
+  width: 95px;
+  height: 42px;
+  top: 45%;
+  left: -115px;
+  animation: moveRight 33s linear infinite 18s;
+  border-radius: 42px;
+}
+
+.cloud7::before {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  left: 18px;
+  border-radius: 50%;
+}
+
+.cloud7::after {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 40px;
+  border-radius: 50%;
+}
+
+/* Realistic Cloud 8 - Lower middle cloud */
+.cloud8 {
+  width: 125px;
+  height: 38px;
+  top: 60%;
+  left: -135px;
+  animation: moveRight 37s linear infinite 25s;
+  border-radius: 38px;
+}
+
+.cloud8::before {
+  width: 75px;
+  height: 70px;
+  top: -35px;
+  left: 25px;
+  border-radius: 50%;
+}
+
+.cloud8::after {
   width: 65px;
-  height: 22px;
-  top: 18px;
-  left: 22px;
+  height: 55px;
+  top: -28px;
+  left: 50px;
+  border-radius: 50%;
 }
 
 @keyframes moveRight {
   0% {
-    left: -150px;
+    left: -200px;
     opacity: 0;
   }
-  10% {
-    opacity: 0.7;
+  5% {
+    opacity: 0.8;
   }
-  90% {
-    opacity: 0.7;
+  95% {
+    opacity: 0.8;
   }
   100% {
-    left: calc(100vw + 50px);
+    left: calc(100vw + 100px);
     opacity: 0;
   }
 }
@@ -320,7 +413,7 @@ h1 {
   }
 
   /* Smaller clouds on mobile */
-  .cloud1, .cloud2, .cloud3, .cloud4, .cloud5 {
-    transform: scale(0.7);
+  .cloud1, .cloud2, .cloud3, .cloud4, .cloud5, .cloud6, .cloud7, .cloud8 {
+    transform: scale(0.6);
   }
 }
