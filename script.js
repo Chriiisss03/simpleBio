@@ -58,7 +58,7 @@ class CloudSystem {
   constructor() {
     this.clouds = [];
     this.cloudContainer = null;
-    this.cloudCount = 12;
+    this.cloudCount = 8;
     this.init();
   }
   
@@ -94,82 +94,125 @@ class CloudSystem {
   
   generateClouds() {
     for (let i = 0; i < this.cloudCount; i++) {
-      this.createCloud(i);
+      setTimeout(() => {
+        this.createRealisticCloud(i);
+      }, i * 2000);
     }
   }
   
-  createCloud(index) {
-    const cloud = document.createElement('div');
-    cloud.className = `cloud cloud-${index}`;
-    
-    // Random cloud properties
-    const size = this.randomBetween(60, 140);
-    const height = size * this.randomBetween(0.4, 0.7);
-    const topPosition = this.randomBetween(5, 85);
-    const speed = this.randomBetween(25, 45);
-    const delay = this.randomBetween(0, 30);
-    const opacity = this.randomBetween(0.6, 0.9);
-    
-    // Apply styles
-    cloud.style.cssText = `
+  createRealisticCloud(index) {
+    const cloudWrapper = document.createElement('div');
+    cloudWrapper.className = `cloud-wrapper cloud-${index}`;
+    cloudWrapper.style.cssText = `
       position: absolute;
-      background: rgba(255, 255, 255, ${opacity});
-      border-radius: ${height}px;
-      width: ${size}px;
-      height: ${height}px;
-      top: ${topPosition}%;
-      left: -200px;
-      opacity: 0;
-      animation: floatAcross ${speed}s linear infinite ${delay}s;
-      z-index: ${this.randomBetween(1, 3)};
+      pointer-events: none;
     `;
     
-    // Create cloud puffs for realistic shape
-    this.addCloudPuffs(cloud, size, height);
+    // Random cloud properties
+    const baseSize = this.randomBetween(100, 200);
+    const height = baseSize * this.randomBetween(0.4, 0.6);
+    const topPosition = this.randomBetween(5, 80);
+    const speed = this.randomBetween(40, 70);
+    const delay = this.randomBetween(0, 20);
+    const opacity = this.randomBetween(0.4, 0.8);
     
-    this.cloudContainer.appendChild(cloud);
+    // Create main cloud body
+    const mainCloud = document.createElement('div');
+    mainCloud.style.cssText = `
+      position: absolute;
+      width: ${baseSize}px;
+      height: ${height}px;
+      background: radial-gradient(ellipse at center,
+        rgba(255, 255, 255, ${opacity}) 0%,
+        rgba(255, 255, 255, ${opacity * 0.7}) 30%,
+        rgba(255, 255, 255, ${opacity * 0.4}) 60%,
+        rgba(255, 255, 255, 0) 100%);
+      border-radius: ${height}px;
+      filter: blur(${this.randomBetween(1, 3)}px);
+    `;
+    
+    cloudWrapper.appendChild(mainCloud);
+    
+    // Create multiple cloud puffs for realistic shape
+    const puffCount = this.randomBetween(4, 8);
+    for (let i = 0; i < puffCount; i++) {
+      this.addRealisticPuff(cloudWrapper, baseSize, height, opacity);
+    }
+    
+    // Set cloud animation
+    cloudWrapper.style.cssText += `
+      top: ${topPosition}%;
+      left: -${baseSize + 100}px;
+      animation: floatAcross ${speed}s linear infinite ${delay}s,
+                 gentleBob ${this.randomBetween(4, 7)}s ease-in-out infinite ${this.randomBetween(0, 2)}s;
+    `;
+    
+    this.cloudContainer.appendChild(cloudWrapper);
     this.clouds.push({
-      element: cloud,
-      size: size,
-      speed: speed,
-      respawnTime: (speed + delay) * 1000
+      element: cloudWrapper,
+      size: baseSize,
+      speed: speed
     });
   }
   
-  addCloudPuffs(cloud, width, height) {
-    // Create 2-4 random puffs for each cloud
-    const puffCount = this.randomBetween(2, 4);
+  addRealisticPuff(cloudWrapper, baseWidth, baseHeight, baseOpacity) {
+    const puff = document.createElement('div');
+    puff.className = 'cloud-puff';
     
-    for (let i = 0; i < puffCount; i++) {
-      const puff = document.createElement('div');
-      const puffSize = this.randomBetween(height * 0.8, height * 1.5);
-      const leftPos = this.randomBetween(width * 0.1, width * 0.7);
-      const topPos = this.randomBetween(-puffSize * 0.6, -puffSize * 0.2);
-      
-      puff.style.cssText = `
-        content: '';
-        position: absolute;
-        background: rgba(255, 255, 255, ${this.randomBetween(0.5, 0.8)});
-        border-radius: 50%;
-        width: ${puffSize}px;
-        height: ${puffSize}px;
-        left: ${leftPos}px;
-        top: ${topPos}px;
-        z-index: -1;
-      `;
-      
-      cloud.appendChild(puff);
-    }
+    // Varied puff sizes for natural look
+    const puffWidth = this.randomBetween(baseWidth * 0.3, baseWidth * 0.8);
+    const puffHeight = this.randomBetween(baseHeight * 0.6, baseHeight * 1.4);
+    
+    // Random positioning around the main cloud
+    const leftOffset = this.randomBetween(-baseWidth * 0.2, baseWidth * 0.8);
+    const topOffset = this.randomBetween(-baseHeight * 0.5, baseHeight * 0.3);
+    
+    // Varied opacity for depth
+    const puffOpacity = baseOpacity * this.randomBetween(0.6, 1.2);
+    
+    puff.style.cssText = `
+      position: absolute;
+      width: ${puffWidth}px;
+      height: ${puffHeight}px;
+      left: ${leftOffset}px;
+      top: ${topOffset}px;
+      background: radial-gradient(circle at center,
+        rgba(255, 255, 255, ${puffOpacity}) 0%,
+        rgba(255, 255, 255, ${puffOpacity * 0.6}) 30%,
+        rgba(255, 255, 255, ${puffOpacity * 0.3}) 60%,
+        rgba(255, 255, 255, 0) 100%);
+      border-radius: 50%;
+      filter: blur(${this.randomBetween(2, 4)}px);
+      transform: scale(${this.randomBetween(0.9, 1.1)});
+    `;
+    
+    cloudWrapper.appendChild(puff);
   }
   
   startCloudLifecycle() {
-    // Add floating animation keyframes
+    // Add floating animation keyframes if not already added
     this.addCloudAnimations();
     
-    // Respawn clouds periodically
+    // Continuously spawn new clouds
     setInterval(() => {
-      this.maintainClouds();
-    }, 5000);
+      if (this.clouds.length < this.cloudCount + 2) {
+        this.createRealisticCloud(Date.now());
+      }
+      
+      // Remove clouds that have left the screen
+      this.cleanupClouds();
+    }, 8000);
+  }
+  
+  cleanupClouds() {
+    this.clouds = this.clouds.filter(cloud => {
+      const rect = cloud.element.getBoundingClientRect();
+      if (rect.left > window.innerWidth + 200) {
+        cloud.element.remove();
+        return false;
+      }
+      return true;
+    });
   }
   
   addCloudAnimations() {
@@ -180,51 +223,59 @@ class CloudSystem {
     style.textContent = `
       @keyframes floatAcross {
         0% {
-          left: -250px;
+          transform: translateX(0) translateZ(0);
           opacity: 0;
-          transform: translateY(0px);
+        }
+        2% {
+          opacity: 0.3;
         }
         5% {
-          opacity: 0.8;
+          opacity: 0.7;
         }
-        25% {
-          transform: translateY(-5px);
+        10% {
+          opacity: 1;
         }
-        50% {
-          transform: translateY(3px);
-        }
-        75% {
-          transform: translateY(-2px);
+        90% {
+          opacity: 1;
         }
         95% {
-          opacity: 0.8;
+          opacity: 0.7;
+        }
+        98% {
+          opacity: 0.3;
         }
         100% {
-          left: calc(100vw + 100px);
+          transform: translateX(calc(100vw + 400px)) translateZ(0);
           opacity: 0;
-          transform: translateY(0px);
         }
       }
       
-      @keyframes gentleFloat {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
+      @keyframes gentleBob {
+        0%, 100% { 
+          transform: translateY(0px) scale(1) rotate(0deg); 
+        }
+        25% { 
+          transform: translateY(-10px) scale(1.02) rotate(1deg); 
+        }
+        50% { 
+          transform: translateY(5px) scale(0.98) rotate(-1deg); 
+        }
+        75% { 
+          transform: translateY(-3px) scale(1.01) rotate(0.5deg); 
+        }
       }
       
-      .cloud:hover {
-        animation-play-state: paused;
-        transform: scale(1.1) translateY(-5px) !important;
-        transition: all 0.3s ease;
+      .cloud-wrapper {
+        will-change: transform;
+        transform: translateZ(0);
+      }
+      
+      .cloud-wrapper:hover .cloud-puff {
+        filter: blur(2px) brightness(1.1);
+        transition: all 0.5s ease;
       }
     `;
     document.head.appendChild(style);
-  }
-  
-  maintainClouds() {
-    // Occasionally add new clouds for variety
-    if (Math.random() < 0.3 && this.clouds.length < this.cloudCount + 3) {
-      this.createCloud(Date.now());
-    }
   }
   
   randomBetween(min, max) {
@@ -249,6 +300,19 @@ class CloudSystem {
     this.clouds.forEach(cloud => {
       const newDuration = cloud.speed / speedMultiplier;
       cloud.element.style.animationDuration = `${newDuration}s`;
+    });
+  }
+  
+  // Add wind effect
+  addWindEffect(strength = 1) {
+    this.clouds.forEach(cloud => {
+      const currentSpeed = parseFloat(cloud.element.style.animationDuration);
+      const newSpeed = currentSpeed / (1 + strength * 0.5);
+      cloud.element.style.animationDuration = `${newSpeed}s`;
+      
+      setTimeout(() => {
+        cloud.element.style.animationDuration = `${currentSpeed}s`;
+      }, 3000);
     });
   }
 }
@@ -295,7 +359,7 @@ class InteractiveEffects {
       // 'C' key to pause/resume clouds
       if (e.key.toLowerCase() === 'c') {
         if (window.cloudSystem) {
-          const clouds = document.querySelectorAll('.cloud');
+          const clouds = document.querySelectorAll('.cloud-wrapper');
           const isPaused = clouds[0]?.style.animationPlayState === 'paused';
           
           if (isPaused) {
@@ -305,6 +369,14 @@ class InteractiveEffects {
             window.cloudSystem.pauseClouds();
             console.log('⏸️ Clouds paused');
           }
+        }
+      }
+      
+      // 'W' key to add wind effect
+      if (e.key.toLowerCase() === 'w') {
+        if (window.cloudSystem) {
+          window.cloudSystem.addWindEffect(1.5);
+          console.log('💨 Wind gust!');
         }
       }
     });
@@ -342,6 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('🎮 Keyboard shortcuts:');
   console.log('   SPACE - Toggle music');
   console.log('   C - Pause/Resume clouds');
+  console.log('   W - Add wind effect');
   
   // Welcome message
   setTimeout(() => {
