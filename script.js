@@ -54,7 +54,6 @@ document.addEventListener('visibilitychange', function() {
 // =====================================
 // DYNAMIC CLOUD GENERATION SYSTEM
 // =====================================
-
 class CloudSystem {
   constructor() {
     this.clouds = [];
@@ -62,7 +61,7 @@ class CloudSystem {
     this.cloudCount = 12;
     this.init();
   }
-
+  
   init() {
     // Create clouds container if it doesn't exist
     this.cloudContainer = document.querySelector('.clouds');
@@ -76,7 +75,7 @@ class CloudSystem {
     // Start cloud lifecycle management
     this.startCloudLifecycle();
   }
-
+  
   createCloudContainer() {
     this.cloudContainer = document.createElement('div');
     this.cloudContainer.className = 'clouds';
@@ -92,13 +91,13 @@ class CloudSystem {
     `;
     document.body.insertBefore(this.cloudContainer, document.body.firstChild);
   }
-
+  
   generateClouds() {
     for (let i = 0; i < this.cloudCount; i++) {
       this.createCloud(i);
     }
   }
-
+  
   createCloud(index) {
     const cloud = document.createElement('div');
     cloud.className = `cloud cloud-${index}`;
@@ -124,7 +123,7 @@ class CloudSystem {
       animation: floatAcross ${speed}s linear infinite ${delay}s;
       z-index: ${this.randomBetween(1, 3)};
     `;
-
+    
     // Create cloud puffs for realistic shape
     this.addCloudPuffs(cloud, size, height);
     
@@ -136,7 +135,7 @@ class CloudSystem {
       respawnTime: (speed + delay) * 1000
     });
   }
-
+  
   addCloudPuffs(cloud, width, height) {
     // Create 2-4 random puffs for each cloud
     const puffCount = this.randomBetween(2, 4);
@@ -162,7 +161,7 @@ class CloudSystem {
       cloud.appendChild(puff);
     }
   }
-
+  
   startCloudLifecycle() {
     // Add floating animation keyframes
     this.addCloudAnimations();
@@ -172,7 +171,7 @@ class CloudSystem {
       this.maintainClouds();
     }, 5000);
   }
-
+  
   addCloudAnimations() {
     if (document.getElementById('cloud-animations')) return;
     
@@ -220,31 +219,31 @@ class CloudSystem {
     `;
     document.head.appendChild(style);
   }
-
+  
   maintainClouds() {
     // Occasionally add new clouds for variety
     if (Math.random() < 0.3 && this.clouds.length < this.cloudCount + 3) {
       this.createCloud(Date.now());
     }
   }
-
+  
   randomBetween(min, max) {
     return Math.random() * (max - min) + min;
   }
-
+  
   // Method to pause/resume clouds
   pauseClouds() {
     this.clouds.forEach(cloud => {
       cloud.element.style.animationPlayState = 'paused';
     });
   }
-
+  
   resumeClouds() {
     this.clouds.forEach(cloud => {
       cloud.element.style.animationPlayState = 'running';
     });
   }
-
+  
   // Method to change cloud speed
   setCloudSpeed(speedMultiplier = 1) {
     this.clouds.forEach(cloud => {
@@ -257,18 +256,17 @@ class CloudSystem {
 // =====================================
 // ENHANCED INTERACTIVITY
 // =====================================
-
 class InteractiveEffects {
   constructor() {
     this.init();
   }
-
+  
   init() {
     this.addMouseTracker();
     this.addKeyboardShortcuts();
     this.addContainerEffects();
   }
-
+  
   addMouseTracker() {
     let mouseX = 0, mouseY = 0;
     
@@ -285,7 +283,7 @@ class InteractiveEffects {
       }
     });
   }
-
+  
   addKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
       // Space bar to toggle music
@@ -311,7 +309,7 @@ class InteractiveEffects {
       }
     });
   }
-
+  
   addContainerEffects() {
     const container = document.querySelector('.container');
     if (container) {
@@ -320,7 +318,7 @@ class InteractiveEffects {
         container.style.transform = 'translateY(-10px) scale(1.02)';
         container.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.2)';
       });
-
+      
       container.addEventListener('mouseleave', () => {
         container.style.transform = 'translateY(0px) scale(1)';
         container.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.15)';
@@ -332,7 +330,6 @@ class InteractiveEffects {
 // =====================================
 // INITIALIZE EVERYTHING
 // =====================================
-
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize cloud system
   window.cloudSystem = new CloudSystem();
