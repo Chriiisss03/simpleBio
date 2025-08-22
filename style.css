@@ -32,8 +32,9 @@ body {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   padding: 40px 30px;
   width: 350px;
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
   z-index: 10;
+  position: relative;
 }
 
 .container:hover {
@@ -41,17 +42,46 @@ body {
 }
 
 /* Avatar */
+.avatar {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .avatar img {
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  margin-bottom: 20px;
   border: 4px solid #7289DA;
   transition: transform 0.3s;
   object-fit: cover;
 }
 
 .avatar img:hover {
+  transform: scale(1.1);
+}
+
+/* Fallback avatar with initials */
+#avatar-fallback {
+  width: 130px;
+  height: 130px;
+  background: linear-gradient(45deg, #7289DA, #5865F2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+  border: 4px solid #7289DA;
+  transition: transform 0.3s;
+}
+
+#avatar-fallback:hover {
   transform: scale(1.1);
 }
 
@@ -127,4 +157,150 @@ h1 {
 .audio-control:hover {
   background-color: white;
   transform: scale(1.05);
+}
+
+/* Clouds styling */
+.clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 100px;
+  opacity: 0.8;
+}
+
+/* Individual cloud animations */
+.cloud1 {
+  width: 100px;
+  height: 40px;
+  top: 20%;
+  animation: floatAcross 35s infinite;
+}
+
+.cloud2 {
+  width: 80px;
+  height: 35px;
+  top: 40%;
+  animation: floatAcross 40s infinite 5s;
+}
+
+.cloud3 {
+  width: 120px;
+  height: 45px;
+  top: 60%;
+  animation: floatAcross 30s infinite 10s;
+}
+
+.cloud4 {
+  width: 90px;
+  height: 38px;
+  top: 80%;
+  animation: floatAcross 45s infinite 15s;
+}
+
+.cloud5 {
+  width: 110px;
+  height: 42px;
+  top: 10%;
+  animation: floatAcross 38s infinite 20s;
+}
+
+.cloud6 {
+  width: 85px;
+  height: 36px;
+  top: 50%;
+  animation: floatAcross 42s infinite 25s;
+}
+
+.cloud7 {
+  width: 95px;
+  height: 40px;
+  top: 30%;
+  animation: floatAcross 33s infinite 30s;
+}
+
+.cloud8 {
+  width: 105px;
+  height: 41px;
+  top: 70%;
+  animation: floatAcross 36s infinite 35s;
+}
+
+@keyframes floatAcross {
+  0% {
+    left: -250px;
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  5% {
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  75% {
+    transform: translateY(-2px);
+  }
+  95% {
+    opacity: 0.8;
+  }
+  100% {
+    left: calc(100vw + 100px);
+    opacity: 0;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.cloud:hover {
+  animation-play-state: paused;
+  transform: scale(1.1) translateY(-5px) !important;
+  transition: all 0.3s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .container {
+    width: 90%;
+    padding: 30px 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  .bio {
+    font-size: 14px;
+  }
+  
+  .btn {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+  
+  .avatar img,
+  #avatar-fallback {
+    width: 100px;
+    height: 100px;
+  }
+  
+  #avatar-fallback {
+    font-size: 36px;
+  }
 }
