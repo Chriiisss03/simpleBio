@@ -61,7 +61,7 @@ body {
   border: 4px solid #7289DA;
   transition: transform 0.3s;
   object-fit: cover;
-  object-position: center;
+  object-position: bottom;
 }
 
 .avatar img:hover {
