@@ -58,7 +58,7 @@ class CloudSystem {
   constructor() {
     this.clouds = [];
     this.cloudContainer = null;
-    this.cloudCount = 8;
+    this.cloudCount = 12; // Increased for better coverage
     this.init();
   }
   
@@ -93,14 +93,20 @@ class CloudSystem {
   }
   
   generateClouds() {
+    // Create clouds at different starting positions across the screen
     for (let i = 0; i < this.cloudCount; i++) {
       setTimeout(() => {
-        this.createRealisticCloud(i);
-      }, i * 2000);
+        this.createRealisticCloud(i, true);
+      }, i * 1500);
+    }
+    
+    // Add some clouds that start already on screen
+    for (let i = 0; i < 5; i++) {
+      this.createRealisticCloud(`initial-${i}`, false, true);
     }
   }
   
-  createRealisticCloud(index) {
+  createRealisticCloud(index, animate = true, startOnScreen = false) {
     const cloudWrapper = document.createElement('div');
     cloudWrapper.className = `cloud-wrapper cloud-${index}`;
     cloudWrapper.style.cssText = `
@@ -108,13 +114,13 @@ class CloudSystem {
       pointer-events: none;
     `;
     
-    // Random cloud properties
-    const baseSize = this.randomBetween(100, 200);
+    // Random cloud properties with better distribution
+    const baseSize = this.randomBetween(80, 250);
     const height = baseSize * this.randomBetween(0.4, 0.6);
-    const topPosition = this.randomBetween(5, 80);
-    const speed = this.randomBetween(40, 70);
-    const delay = this.randomBetween(0, 20);
-    const opacity = this.randomBetween(0.4, 0.8);
+    const topPosition = this.randomBetween(0, 95); // Full screen height coverage
+    const speed = this.randomBetween(45, 80);
+    const delay = startOnScreen ? 0 : this.randomBetween(0, 30);
+    const opacity = this.randomBetween(0.3, 0.7);
     
     // Create main cloud body
     const mainCloud = document.createElement('div');
@@ -139,13 +145,26 @@ class CloudSystem {
       this.addRealisticPuff(cloudWrapper, baseSize, height, opacity);
     }
     
-    // Set cloud animation
-    cloudWrapper.style.cssText += `
-      top: ${topPosition}%;
-      left: -${baseSize + 100}px;
-      animation: floatAcross ${speed}s linear infinite ${delay}s,
-                 gentleBob ${this.randomBetween(4, 7)}s ease-in-out infinite ${this.randomBetween(0, 2)}s;
-    `;
+    // Set initial position and animation
+    let initialLeft = startOnScreen ? 
+      this.randomBetween(-baseSize/2, window.innerWidth - baseSize/2) : 
+      -baseSize - 100;
+    
+    if (animate) {
+      cloudWrapper.style.cssText += `
+        top: ${topPosition}%;
+        left: ${initialLeft}px;
+        animation: floatAcross ${speed}s linear infinite ${delay}s,
+                   gentleBob ${this.randomBetween(4, 7)}s ease-in-out infinite ${this.randomBetween(0, 2)}s;
+      `;
+    } else {
+      // For static initial clouds
+      cloudWrapper.style.cssText += `
+        top: ${topPosition}%;
+        left: ${initialLeft}px;
+        animation: gentleBob ${this.randomBetween(4, 7)}s ease-in-out infinite ${this.randomBetween(0, 2)}s;
+      `;
+    }
     
     this.cloudContainer.appendChild(cloudWrapper);
     this.clouds.push({
@@ -195,13 +214,74 @@ class CloudSystem {
     
     // Continuously spawn new clouds
     setInterval(() => {
-      if (this.clouds.length < this.cloudCount + 2) {
-        this.createRealisticCloud(Date.now());
+      if (this.clouds.length < this.cloudCount + 5) {
+        this.createRealisticCloud(Date.now(), true, false);
       }
       
       // Remove clouds that have left the screen
       this.cleanupClouds();
-    }, 8000);
+    }, 6000);
+    
+    // Add scattered clouds periodically
+    setInterval(() => {
+      if (Math.random() < 0.3 && this.clouds.length < this.cloudCount + 8) {
+        const randomX = this.randomBetween(0, window.innerWidth);
+        this.createCloudAtPosition(Date.now(), randomX);
+      }
+    }, 10000);
+  }
+  
+  createCloudAtPosition(index, xPosition) {
+    const cloudWrapper = document.createElement('div');
+    cloudWrapper.className = `cloud-wrapper cloud-${index}`;
+    cloudWrapper.style.cssText = `
+      position: absolute;
+      pointer-events: none;
+    `;
+    
+    const baseSize = this.randomBetween(60, 180);
+    const height = baseSize * this.randomBetween(0.4, 0.6);
+    const topPosition = this.randomBetween(0, 95);
+    const speed = this.randomBetween(50, 90);
+    const opacity = this.randomBetween(0.3, 0.6);
+    
+    // Create main cloud body
+    const mainCloud = document.createElement('div');
+    mainCloud.style.cssText = `
+      position: absolute;
+      width: ${baseSize}px;
+      height: ${height}px;
+      background: radial-gradient(ellipse at center,
+        rgba(255, 255, 255, ${opacity}) 0%,
+        rgba(255, 255, 255, ${opacity * 0.7}) 30%,
+        rgba(255, 255, 255, ${opacity * 0.4}) 60%,
+        rgba(255, 255, 255, 0) 100%);
+      border-radius: ${height}px;
+      filter: blur(${this.randomBetween(1, 3)}px);
+    `;
+    
+    cloudWrapper.appendChild(mainCloud);
+    
+    // Add puffs
+    const puffCount = this.randomBetween(3, 6);
+    for (let i = 0; i < puffCount; i++) {
+      this.addRealisticPuff(cloudWrapper, baseSize, height, opacity);
+    }
+    
+    // Position cloud at specific X coordinate
+    cloudWrapper.style.cssText += `
+      top: ${topPosition}%;
+      left: ${xPosition}px;
+      animation: floatFromPosition ${speed}s linear infinite,
+                 gentleBob ${this.randomBetween(4, 7)}s ease-in-out infinite;
+    `;
+    
+    this.cloudContainer.appendChild(cloudWrapper);
+    this.clouds.push({
+      element: cloudWrapper,
+      size: baseSize,
+      speed: speed
+    });
   }
   
   cleanupClouds() {
@@ -247,6 +327,15 @@ class CloudSystem {
         100% {
           transform: translateX(calc(100vw + 400px)) translateZ(0);
           opacity: 0;
+        }
+      }
+      
+      @keyframes floatFromPosition {
+        0% {
+          transform: translateX(0) translateZ(0);
+        }
+        100% {
+          transform: translateX(calc(100vw + 400px)) translateZ(0);
         }
       }
       
