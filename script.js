@@ -47,27 +47,15 @@ function initAudioControls() {
   });
   
   audio.addEventListener('error', (e) => {
-    console.error('Audio loading error:', e);
-    musicBtn.textContent = '❌ Audio Error';
-    musicBtn.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
-    musicBtn.title = 'Audio file could not be loaded';
+    console.error('Audio file not found: audio/I-KNOW.mp3');
+    musicBtn.textContent = '📁 Add I-KNOW.mp3';
+    musicBtn.style.backgroundColor = 'rgba(255, 200, 0, 0.2)';
+    musicBtn.title = 'Click for instructions';
     
-    // Try to provide helpful error message
-    const errorMessages = {
-      1: 'Audio loading aborted',
-      2: 'Network error while loading audio',
-      3: 'Audio decoding error',
-      4: 'Audio format not supported'
-    };
-    
-    const errorCode = audio.error ? audio.error.code : 0;
-    const errorMsg = errorMessages[errorCode] || 'Unknown audio error';
-    
-    console.error('Error details:', errorMsg);
-    
-    // Provide fallback action
+    // Show instructions when button is clicked
+    musicBtn.removeEventListener('click', toggleMusic);
     musicBtn.addEventListener('click', () => {
-      alert(`Audio Error: ${errorMsg}\n\nTo fix this:\n1. Check your internet connection (if using online audio)\n2. Or add your own MP3 file in the "audio" folder\n3. Or update the audio source in the HTML file`);
+      alert('To add your music:\n\n1. Create a folder named "audio" in the same directory as index.html\n2. Place your music file "I-KNOW.mp3" inside the audio folder\n\nYour folder structure should be:\n📁 Your Project Folder\n  ├── index.html\n  ├── style.css\n  ├── script.js\n  └── 📁 audio\n        └── I-KNOW.mp3');
     });
   });
 }
@@ -92,14 +80,15 @@ function toggleMusic() {
         })
         .catch(error => {
           console.error('Playback failed:', error);
-          musicBtn.textContent = '🚫 Click Again';
-          musicBtn.style.backgroundColor = 'rgba(255, 200, 0, 0.3)';
           
           // Browser might be blocking autoplay, need user interaction
           if (error.name === 'NotAllowedError') {
-            alert('Please click the button again to play music.\n\nModern browsers require user interaction to play audio.');
+            alert('Browser requires user interaction to play audio.\nPlease click the button again.');
+            musicBtn.textContent = '🎵 Click Again';
+            musicBtn.style.backgroundColor = 'rgba(255, 200, 0, 0.3)';
           } else {
-            alert('Could not play audio. Error: ' + error.message);
+            alert('Please add your music file:\n\n1. Create "audio" folder\n2. Add "I-KNOW.mp3" to it');
+            musicBtn.textContent = '📁 Add I-KNOW.mp3';
           }
         });
     }
