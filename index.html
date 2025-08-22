@@ -19,11 +19,12 @@
     <div class="cloud cloud7"></div>
     <div class="cloud cloud8"></div>
   </div>
-
+  
   <div class="container">
     <!-- Avatar -->
     <div class="avatar">
-      <img src="img/chris.jpg" alt="Christian Jay Borja">
+      <img src="img/chris.jpg" alt="Christian Jay Borja" onerror="this.style.display='none'; document.getElementById('avatar-fallback').style.display='block';">
+      <span id="avatar-fallback" style="display:none;">CJ</span>
     </div>
     
     <!-- Name and Bio -->
@@ -38,7 +39,7 @@
       <a href="https://www.facebook.com/christianjay.borja.397/" target="_blank" class="btn facebook">Facebook</a>
     </div>
   </div>
-
+  
   <!-- Background Music with Controls -->
   <audio id="bgMusic" loop>
     <source src="audio/I-KNOW.mp3" type="audio/mpeg">
