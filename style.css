@@ -125,7 +125,7 @@ h1 {
 
 /* Individual button colors with class names */
 .btn.twitter { 
-  background-color: #000000; 
+  background-color: #000000 !important; 
 }
 
 .btn.github { 
