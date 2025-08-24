@@ -124,6 +124,10 @@ h1 {
 }
 
 /* Individual button colors with class names */
+.btn.x-button { 
+  background-color: #000000 !important; 
+}
+
 .btn.twitter { 
   background-color: #000000 !important; 
 }
@@ -169,6 +173,10 @@ h1 {
 }
 
 /* Glow per button */
+.btn.x-button:hover { 
+  box-shadow: 0 0 15px #333, 0 0 30px #333; 
+}
+
 .btn.twitter:hover { 
   box-shadow: 0 0 15px #000000, 0 0 30px #000000; 
 }
