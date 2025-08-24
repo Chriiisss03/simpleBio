@@ -129,6 +129,21 @@ h1 {
 .btn.discord { background-color: #7289DA; } /* Discord */
 .btn.facebook { background-color: #3b5998; } /* Facebook */
 
+/* Instagram button styling */
+.btn.instagram { 
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Instagram icon spacing */
+.btn.instagram i {
+  margin-right: 6px;
+  font-size: 18px;
+  vertical-align: middle;
+}
+
 /* Hover effect with glow */
 .btn:hover {
   transform: scale(1.05);
@@ -139,6 +154,12 @@ h1 {
 .btn:nth-child(2):hover { box-shadow: 0 0 15px #333, 0 0 30px #333; }
 .btn.discord:hover { box-shadow: 0 0 15px #7289DA, 0 0 30px #7289DA; }
 .btn.facebook:hover { box-shadow: 0 0 15px #3b5998, 0 0 30px #3b5998; }
+
+/* Instagram hover effect with gradient glow */
+.btn.instagram:hover { 
+  box-shadow: 0 0 15px rgba(188, 24, 136, 0.5), 0 0 30px rgba(220, 39, 67, 0.5);
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
 
 /* Audio Control */
 .audio-control {
@@ -327,8 +348,6 @@ h1 {
   }
 }
 
-/* Removed duplicate gentleFloat */
-
 .cloud:hover {
   animation-play-state: paused;
   filter: blur(1px) !important;
@@ -363,5 +382,10 @@ h1 {
   
   #avatar-fallback {
     font-size: 36px;
+  }
+  
+  /* Adjust Instagram icon size on mobile */
+  .btn.instagram i {
+    font-size: 16px;
   }
 }
