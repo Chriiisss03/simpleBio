@@ -147,11 +147,20 @@ h1 {
   overflow: hidden;
 }
 
-/* Instagram icon */
-.btn.instagram i {
-  margin-right: 6px;
+/* Icon styling for all social buttons */
+.btn i {
+  margin-right: 8px;
   font-size: 18px;
   vertical-align: middle;
+}
+
+/* Specific icon adjustments if needed */
+.btn.facebook i {
+  font-size: 17px; /* Facebook icon slightly smaller for balance */
+}
+
+.btn.discord i {
+  font-size: 16px; /* Discord icon adjustment */
 }
 
 /* Hover effect with glow */
@@ -404,7 +413,7 @@ h1 {
   }
   
   /* Adjust Instagram icon size on mobile */
-  .btn.instagram i {
+  .btn i {
     font-size: 16px;
   }
 }
