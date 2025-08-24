@@ -125,7 +125,7 @@ h1 {
 
 /* Individual button colors with class names */
 .btn.twitter { 
-  background-color: #000000; 
+  background-color: #1DA1F2; 
 }
 
 .btn.github { 
@@ -170,7 +170,7 @@ h1 {
 
 /* Glow per button */
 .btn.twitter:hover { 
-  box-shadow: 0 0 15px #000000, 0 0 30px #000000; 
+  box-shadow: 0 0 15px #1DA1F2, 0 0 30px #1DA1F2; 
 }
 
 .btn.github:hover { 
