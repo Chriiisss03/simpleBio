@@ -1,3 +1,31 @@
+// Click Anywhere to Proceed Function
+function initClickOverlay() {
+  const clickOverlay = document.getElementById('click-overlay');
+  
+  if (clickOverlay) {
+    // Add click event to the overlay
+    clickOverlay.addEventListener('click', function() {
+      clickOverlay.classList.add('hidden');
+      
+      // Remove the overlay from DOM after animation completes
+      setTimeout(() => {
+        clickOverlay.style.display = 'none';
+      }, 500);
+    });
+    
+    // Allow pressing Enter to proceed (Space is used for music)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !clickOverlay.classList.contains('hidden')) {
+        e.preventDefault();
+        clickOverlay.classList.add('hidden');
+        setTimeout(() => {
+          clickOverlay.style.display = 'none';
+        }, 500);
+      }
+    });
+  }
+}
+
 // Audio Controls - Fixed version
 let audio = null;
 let musicBtn = null;
@@ -468,14 +496,23 @@ class InteractiveEffects {
   
   addKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
-      // Space bar to toggle music
-      if (e.code === 'Space' && !e.target.matches('input, textarea')) {
+      // Check if overlay is still visible
+      const clickOverlay = document.getElementById('click-overlay');
+      const overlayVisible = clickOverlay && !clickOverlay.classList.contains('hidden');
+      
+      // Don't trigger shortcuts if overlay is visible (except Enter to close it)
+      if (overlayVisible && e.key !== 'Enter') {
+        return;
+      }
+      
+      // Space bar to toggle music (only if overlay is gone)
+      if (e.code === 'Space' && !e.target.matches('input, textarea') && !overlayVisible) {
         e.preventDefault();
         toggleMusic();
       }
       
       // 'C' key to pause/resume clouds
-      if (e.key.toLowerCase() === 'c') {
+      if (e.key.toLowerCase() === 'c' && !overlayVisible) {
         if (window.cloudSystem) {
           const clouds = document.querySelectorAll('.cloud-wrapper');
           const isPaused = clouds[0]?.style.animationPlayState === 'paused';
@@ -491,7 +528,7 @@ class InteractiveEffects {
       }
       
       // 'W' key to add wind effect
-      if (e.key.toLowerCase() === 'w') {
+      if (e.key.toLowerCase() === 'w' && !overlayVisible) {
         if (window.cloudSystem) {
           window.cloudSystem.addWindEffect(1.5);
           console.log('💨 Wind gust!');
@@ -521,7 +558,10 @@ class InteractiveEffects {
 // INITIALIZE EVERYTHING
 // =====================================
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize audio controls FIRST
+  // Initialize click overlay FIRST
+  initClickOverlay();
+  
+  // Initialize audio controls
   initAudioControls();
   
   // Initialize cloud system
@@ -533,6 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Console info
   console.log('🌤️ Cloud system initialized!');
   console.log('🎮 Keyboard shortcuts:');
+  console.log('   ENTER - Close welcome overlay');
   console.log('   SPACE - Toggle music');
   console.log('   C - Pause/Resume clouds');
   console.log('   W - Add wind effect');
