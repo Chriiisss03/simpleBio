@@ -123,13 +123,23 @@ h1 {
   text-align: center;
 }
 
-/* Individual button colors */
-.btn:nth-child(1) { background-color: #1DA1F2; } /* Twitter */
-.btn:nth-child(2) { background-color: #333; } /* GitHub */
-.btn.discord { background-color: #7289DA; } /* Discord */
-.btn.facebook { background-color: #3b5998; } /* Facebook */
+/* Individual button colors with class names */
+.btn.twitter { 
+  background-color: #1DA1F2; 
+}
 
-/* Instagram button styling */
+.btn.github { 
+  background-color: #333; 
+}
+
+.btn.discord { 
+  background-color: #7289DA; 
+}
+
+.btn.facebook { 
+  background-color: #3b5998; 
+}
+
 .btn.instagram { 
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   color: white;
@@ -137,7 +147,7 @@ h1 {
   overflow: hidden;
 }
 
-/* Instagram icon spacing */
+/* Instagram icon */
 .btn.instagram i {
   margin-right: 6px;
   font-size: 18px;
@@ -150,15 +160,24 @@ h1 {
 }
 
 /* Glow per button */
-.btn:nth-child(1):hover { box-shadow: 0 0 15px #1DA1F2, 0 0 30px #1DA1F2; }
-.btn:nth-child(2):hover { box-shadow: 0 0 15px #333, 0 0 30px #333; }
-.btn.discord:hover { box-shadow: 0 0 15px #7289DA, 0 0 30px #7289DA; }
-.btn.facebook:hover { box-shadow: 0 0 15px #3b5998, 0 0 30px #3b5998; }
+.btn.twitter:hover { 
+  box-shadow: 0 0 15px #1DA1F2, 0 0 30px #1DA1F2; 
+}
 
-/* Instagram hover effect with gradient glow */
+.btn.github:hover { 
+  box-shadow: 0 0 15px #333, 0 0 30px #333; 
+}
+
+.btn.discord:hover { 
+  box-shadow: 0 0 15px #7289DA, 0 0 30px #7289DA; 
+}
+
+.btn.facebook:hover { 
+  box-shadow: 0 0 15px #3b5998, 0 0 30px #3b5998; 
+}
+
 .btn.instagram:hover { 
   box-shadow: 0 0 15px rgba(188, 24, 136, 0.5), 0 0 30px rgba(220, 39, 67, 0.5);
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
 }
 
 /* Audio Control */
